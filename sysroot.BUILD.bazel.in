@@ -1,0 +1,195 @@
+#
+# sysroot.BUILD.bazel.in
+#
+
+package(default_visibility = ["//visibility:public"])
+
+# Main sysroot filegroup
+filegroup(
+    name = "sysroot",
+    srcs = glob(["bin/**"], allow_empty = True) +
+           glob(["include/**"], allow_empty = True) +
+           glob(["lib/**"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+# Bin directory
+filegroup(
+    name = "bin",
+    srcs = glob(["bin/**"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+# Include directory
+filegroup(
+    name = "include",
+    srcs = glob(["include/**"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+# Lib directory
+filegroup(
+    name = "lib",
+    srcs = glob(["lib/**"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+# Individual tool targets
+filegroup(
+    name = "clang",
+    srcs = glob(["bin/clang*"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "clang-cpp",
+    srcs = ["bin/clang-cpp"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "lld",
+    srcs = glob(["bin/lld*", "bin/ld.lld"], allow_empty = True),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-ar",
+    srcs = ["bin/llvm-ar"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-as",
+    srcs = ["bin/llvm-as"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-nm",
+    srcs = ["bin/llvm-nm"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-objcopy",
+    srcs = ["bin/llvm-objcopy"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-objdump",
+    srcs = ["bin/llvm-objdump"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-readelf",
+    srcs = ["bin/llvm-readelf"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-strip",
+    srcs = ["bin/llvm-strip"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-dwp",
+    srcs = ["bin/llvm-dwp"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-profdata",
+    srcs = ["bin/llvm-profdata"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-cov",
+    srcs = ["bin/llvm-cov"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "llvm-c++filt",
+    srcs = ["bin/llvm-c++filt"],
+    visibility = ["//visibility:public"],
+)
+
+# Tool aliases
+filegroup(
+    name = "gcc",
+    srcs = [":clang"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "cpp",
+    srcs = [":clang"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "ar",
+    srcs = [":llvm-ar"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "as",
+    srcs = [":llvm-as"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "ld",
+    srcs = [":lld"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "nm",
+    srcs = [":llvm-nm"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "objcopy",
+    srcs = [":llvm-objcopy"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "objdump",
+    srcs = [":llvm-objdump"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "strip",
+    srcs = [":llvm-strip"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "dwp",
+    srcs = [":llvm-dwp"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "c++filt",
+    srcs = [":llvm-c++filt"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "gcov",
+    srcs = [":llvm-cov"],
+    visibility = ["//visibility:public"],
+)
+
+# end
