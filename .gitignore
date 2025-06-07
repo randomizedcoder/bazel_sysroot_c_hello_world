@@ -1,0 +1,14 @@
+#
+# .gitignore
+#
+
+# ignore the debugger
+bzl
+
+# ignore the bazel-bin, bazel-out, etc
+bazel-*
+
+# ignore hello if we ever managed to compile it
+hello
+
+# end

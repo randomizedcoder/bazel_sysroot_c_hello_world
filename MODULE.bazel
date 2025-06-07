@@ -1,0 +1,44 @@
+#
+# MODULE.bazel
+#
+
+module(
+    name = "hello_world",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "toolchains_llvm", version = "1.4.0")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "bazel_sysroot_llvm_amd64",
+    urls = ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
+    sha256 = "31912d32edc85fd9e5386d53eea663726961a78661b0fdd313bb3f569815ffb1",
+    strip_prefix = "bazel_sysroot_llvm_amd64-main/sysroot",
+    build_file = "//:sysroot.BUILD.bazel.in",
+)
+
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+
+llvm.toolchain(
+    name = "llvm_toolchain",
+    stdlib = {
+        "linux-x86_64": "stdc++",
+    },
+)
+
+llvm.sysroot(
+    name = "llvm_toolchain",
+    label = "@@bazel_sysroot_llvm_amd64//:sysroot",
+    targets = ["linux-x86_64"],
+    toolchain_config = "//:toolchain_config.bzl",
+)
+
+register_toolchains("@llvm_toolchain//:all")
+
+use_repo(llvm, "llvm_toolchain")
+
+# end
