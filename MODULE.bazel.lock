@@ -206,7 +206,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "miE+G1r8txiL9GGIOFLiY+RyielXfNO9OiFlFw+NE+U=",
-        "usagesDigest": "CqjpqTLotjBQ695Y1HlLTZM99G/dbSK4i31Q24mwhnc=",
+        "usagesDigest": "Tx/7w9msGOYUnXkMlmCtDfgxO9jIctK5RD3xzZpKEpc=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -217,16 +217,24 @@
               "alternative_llvm_sources": [],
               "auth_patterns": {},
               "distribution": "auto",
-              "exec_arch": "",
-              "exec_os": "",
+              "exec_arch": "amd64",
+              "exec_os": "linux",
               "libclang_rt": {},
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {},
               "netrc": "",
-              "sha256": {},
-              "strip_prefix": {},
-              "urls": {}
+              "sha256": {
+                "linux": "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e"
+              },
+              "strip_prefix": {
+                "linux": "bazel_sysroot_llvm_amd64-main/sysroot"
+              },
+              "urls": {
+                "linux": [
+                  "https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"
+                ]
+              }
             }
           },
           "llvm_toolchain": {
@@ -242,8 +250,8 @@
               "cxx_flags": {},
               "cxx_standard": {},
               "dbg_compile_flags": {},
-              "exec_arch": "",
-              "exec_os": "",
+              "exec_arch": "amd64",
+              "exec_os": "linux",
               "extra_exec_compatible_with": {},
               "extra_target_compatible_with": {},
               "link_flags": {},
@@ -253,19 +261,22 @@
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
-              "stdlib": {
-                "linux-x86_64": "stdc++"
-              },
+              "stdlib": {},
               "target_settings": {},
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
               "sysroot": {
-                "linux-x86_64": "'@@bazel_sysroot_llvm_amd64//:sysroot'"
+                "": "'@@toolchains_llvm++llvm+llvm_toolchain//:sysroot'"
               }
             }
           }
         },
         "recordedRepoMappingEntries": [
+          [
+            "",
+            "llvm_toolchain",
+            "toolchains_llvm++llvm+llvm_toolchain"
+          ],
           [
             "toolchains_llvm+",
             "bazel_skylib",

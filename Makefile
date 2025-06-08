@@ -32,6 +32,9 @@ query_deps:
 query_rules_cc:
 	bazelisk query --output=build @rules_cc//...
 
+output_base:
+	bazelisk info output_base
+
 # [das@l:~/Downloads/c_hello_world]$ bazelisk query '@toolchains_llvm//...' --output=label_kind
 # platform rule @toolchains_llvm//platforms:darwin-aarch64
 # platform rule @toolchains_llvm//platforms:darwin-x86_64

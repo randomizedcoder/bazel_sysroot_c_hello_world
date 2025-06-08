@@ -5,4 +5,5 @@
 cc_binary(
     name = "hello",
     srcs = ["hello.cc"],
+    toolchains = ["@llvm_toolchain//:cc-toolchain-x86_64-linux"],
 )

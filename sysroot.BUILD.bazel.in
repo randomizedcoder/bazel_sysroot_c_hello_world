@@ -1,6 +1,7 @@
 #
 # sysroot.BUILD.bazel.in
 #
+# This file is not being used currently.  Instead the same content is embedded into the sysroot as BUILD.bazel file
 
 package(default_visibility = ["//visibility:public"])
 
