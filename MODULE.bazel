@@ -3,42 +3,55 @@
 #
 
 module(
-    name = "hello_world",
-    version = "0.1.0",
+    name = "bazel_sysroot_c_hello_world",
+    version = "1.0",
 )
 
 bazel_dep(name = "rules_cc", version = "0.1.1")
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "toolchains_llvm", version = "1.4.0")
 
-http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+# Using "urls" option, rather than http_archive.  It's not used.
+# http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+# http_archive(
+#     name = "bazel_sysroot_llvm_amd64",
+#     urls = ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
+#     sha256 = "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e",
+#     strip_prefix = "bazel_sysroot_llvm_amd64-main/sysroot",
+#     build_file = "//:sysroot.BUILD.bazel.in",
+# )
 
-http_archive(
-    name = "bazel_sysroot_llvm_amd64",
-    urls = ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
-    sha256 = "31912d32edc85fd9e5386d53eea663726961a78661b0fdd313bb3f569815ffb1",
-    strip_prefix = "bazel_sysroot_llvm_amd64-main/sysroot",
-    build_file = "//:sysroot.BUILD.bazel.in",
-)
-
+# please leave this path as it is.  it is correct
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
+# Configure the toolchain to use our downloaded sysroot
 llvm.toolchain(
     name = "llvm_toolchain",
-    stdlib = {
-        "linux-x86_64": "stdc++",
+    # Using "urls" option to download sysroot with embedded BUILD.bazel
+    urls = {
+        "linux": ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
     },
+    sha256 = {
+        "linux": "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e",
+    },
+    strip_prefix = {
+        "linux": "bazel_sysroot_llvm_amd64-main/sysroot",
+    },
+    exec_os = "linux",
+    exec_arch = "amd64",
 )
 
+# Configure the sysroot with the same name as the toolchain
 llvm.sysroot(
-    name = "llvm_toolchain",
-    label = "@@bazel_sysroot_llvm_amd64//:sysroot",
-    targets = ["linux-x86_64"],
-    toolchain_config = "//:toolchain_config.bzl",
+    name = "llvm_toolchain",  # Match the toolchain name
+    # Using "label" option, rather than "path" or we get errors
+    label = "@llvm_toolchain//:sysroot",  # Use the repository name that toolchains_llvm creates
 )
 
-register_toolchains("@llvm_toolchain//:all")
+# Register the toolchain
+register_toolchains("@llvm_toolchain//:cc-toolchain-x86_64-linux")
 
+# Make the toolchain repository visible
 use_repo(llvm, "llvm_toolchain")
 
 # end
