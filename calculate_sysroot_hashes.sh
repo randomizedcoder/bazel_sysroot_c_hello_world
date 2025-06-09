@@ -24,8 +24,9 @@ download_and_hash() {
 
 # List of sysroots to process
  declare -A SYSROOTS=(
-     ["bazel_sysroot_llvm_amd64"]="https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"
-     ["bazel_sysroot_llvm_arm64"]="https://github.com/randomizedcoder/bazel_sysroot_llvm_arm64/archive/refs/heads/main.tar.gz"
+     ["bazel_sysroot_library"]="https://github.com/randomizedcoder/bazel_sysroot_library/archive/refs/heads/main.tar.gz"
+     #["bazel_sysroot_llvm_amd64"]="https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"
+     #["bazel_sysroot_llvm_arm64"]="https://github.com/randomizedcoder/bazel_sysroot_llvm_arm64/archive/refs/heads/main.tar.gz"
  )
 
 #declare -A SYSROOTS=(
