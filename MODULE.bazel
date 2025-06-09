@@ -9,49 +9,51 @@ module(
 
 bazel_dep(name = "rules_cc", version = "0.1.1")
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "toolchains_llvm", version = "1.4.0")
+bazel_dep(name = "toolchains_llvm", version = "1.3.0")
 
-# Using "urls" option, rather than http_archive.  It's not used.
-# http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-# http_archive(
-#     name = "bazel_sysroot_llvm_amd64",
-#     urls = ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
-#     sha256 = "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e",
-#     strip_prefix = "bazel_sysroot_llvm_amd64-main/sysroot",
-#     build_file = "//:sysroot.BUILD.bazel.in",
-# )
-
+# https://github.com/bazel-contrib/toolchains_llvm/releases/tag/v1.3.0
 # please leave this path as it is.  it is correct
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
-# Configure the toolchain to use our downloaded sysroot
 llvm.toolchain(
-    name = "llvm_toolchain",
-    # Using "urls" option to download sysroot with embedded BUILD.bazel
-    urls = {
-        "linux": ["https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"],
-    },
+    llvm_version = "18.1.8",
     sha256 = {
-        "linux": "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e",
+        "darwin-aarch64": "d28437d58615ccae434c289bcf5e0d10f031c732d7b60a5090541dbbbd381a01",
+        "darwin-x86_64": "f0c103bc2a19ffee7b55df2798188f085756e5668adc7c18d05c7f6705871828",
+        "linux-aarch64": "e9695cb9a8d068236b1c902af877be396eb0110d87525db49c68911b571f6976",
+        "linux-x86_64": "4d0bbec4acd23006d1353d0cd255144df8c910981f5474f3030bfde3dc75ccfa",
     },
-    strip_prefix = {
-        "linux": "bazel_sysroot_llvm_amd64-main/sysroot",
+    stdlib = {
+        "linux-x86_64": "stdc++",
+        "linux-aarch64": "stdc++",
     },
-    exec_os = "linux",
-    exec_arch = "amd64",
+    urls = {
+        "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_aarch64.tar.zst"],
+        "darwin-x86_64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_x86_64.tar.zst"],
+        "linux-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_aarch64.tar.zst"],
+        "linux-x86_64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_x86_64.tar.zst"],
+    },
 )
 
-# Configure the sysroot with the same name as the toolchain
+# Configure the sysroot for the LLVM toolchain
 llvm.sysroot(
-    name = "llvm_toolchain",  # Match the toolchain name
-    # Using "label" option, rather than "path" or we get errors
-    label = "@llvm_toolchain//:sysroot",  # Use the repository name that toolchains_llvm creates
+    name = "llvm_toolchain",
+    label = "@bazel_sysroot_library//:sysroot",
+    targets = ["linux-x86_64"],
 )
-
-# Register the toolchain
-register_toolchains("@llvm_toolchain//:cc-toolchain-x86_64-linux")
 
 # Make the toolchain repository visible
 use_repo(llvm, "llvm_toolchain")
+
+register_toolchains("@llvm_toolchain//:all")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "bazel_sysroot_library",
+    urls = ["https://github.com/randomizedcoder/bazel_sysroot_library/archive/refs/heads/main.tar.gz"],
+    sha256 = "e0a1d57e5d37a714ed3ac40fe02fb69d95266d4e37041e37901d8ea33302ad51",
+    strip_prefix = "bazel_sysroot_library-main/sysroot",
+)
 
 # end

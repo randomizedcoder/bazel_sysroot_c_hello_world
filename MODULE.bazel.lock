@@ -129,8 +129,8 @@
     "https://bcr.bazel.build/modules/stardoc/0.7.0/MODULE.bazel": "05e3d6d30c099b6770e97da986c53bd31844d7f13d41412480ea265ac9e8079c",
     "https://bcr.bazel.build/modules/stardoc/0.7.1/MODULE.bazel": "3548faea4ee5dda5580f9af150e79d0f6aea934fc60c1cc50f4efdd9420759e7",
     "https://bcr.bazel.build/modules/stardoc/0.7.1/source.json": "b6500ffcd7b48cd72c29bb67bcac781e12701cc0d6d55d266a652583cfcdab01",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.4.0/MODULE.bazel": "05239402b7374293359c2f22806f420b75aa5d6f4b15a2eaa809a2c214d58b31",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.4.0/source.json": "229a516d282b17a82be54c6e3ae220a1b750fb55a8495567e5c7a9d09423f3e2",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.3.0/MODULE.bazel": "6e02731e51f7eb2ec4b01c5e79e722bf738a631f6e03d9b4917cbf2cb027bee1",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.3.0/source.json": "4ce0373a89c6df34dd37cd67285bb871d8e225d30dcb67dd093e077a04bbbb71",
     "https://bcr.bazel.build/modules/upb/0.0.0-20220923-a547704/MODULE.bazel": "7298990c00040a0e2f121f6c32544bab27d4452f80d9ce51349b1a28f3005c43",
     "https://bcr.bazel.build/modules/zlib/1.2.11/MODULE.bazel": "07b389abc85fdbca459b69e2ec656ae5622873af3f845e1c9d80fe179f3effa0",
     "https://bcr.bazel.build/modules/zlib/1.3.1.bcr.3/MODULE.bazel": "af322bc08976524477c79d1e45e241b6efbeb918c497e8840b8ab116802dda79",
@@ -205,8 +205,8 @@
     },
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "miE+G1r8txiL9GGIOFLiY+RyielXfNO9OiFlFw+NE+U=",
-        "usagesDigest": "Tx/7w9msGOYUnXkMlmCtDfgxO9jIctK5RD3xzZpKEpc=",
+        "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
+        "usagesDigest": "nhQ0sphFTa9UGAYoUPXJl1fD7gy6ezHPaVXb1m1tRqg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -217,22 +217,32 @@
               "alternative_llvm_sources": [],
               "auth_patterns": {},
               "distribution": "auto",
-              "exec_arch": "amd64",
-              "exec_os": "linux",
+              "exec_arch": "",
+              "exec_os": "",
               "libclang_rt": {},
               "llvm_mirror": "",
-              "llvm_version": "",
+              "llvm_version": "18.1.8",
               "llvm_versions": {},
               "netrc": "",
               "sha256": {
-                "linux": "46cf7d0cb5d53940f34e5d1f61d328a5b12184de204f56de0b519a75fefa059e"
+                "darwin-aarch64": "d28437d58615ccae434c289bcf5e0d10f031c732d7b60a5090541dbbbd381a01",
+                "darwin-x86_64": "f0c103bc2a19ffee7b55df2798188f085756e5668adc7c18d05c7f6705871828",
+                "linux-aarch64": "e9695cb9a8d068236b1c902af877be396eb0110d87525db49c68911b571f6976",
+                "linux-x86_64": "4d0bbec4acd23006d1353d0cd255144df8c910981f5474f3030bfde3dc75ccfa"
               },
-              "strip_prefix": {
-                "linux": "bazel_sysroot_llvm_amd64-main/sysroot"
-              },
+              "strip_prefix": {},
               "urls": {
-                "linux": [
-                  "https://github.com/randomizedcoder/bazel_sysroot_llvm_amd64/archive/refs/heads/main.tar.gz"
+                "darwin-aarch64": [
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_aarch64.tar.zst"
+                ],
+                "darwin-x86_64": [
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_x86_64.tar.zst"
+                ],
+                "linux-aarch64": [
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_aarch64.tar.zst"
+                ],
+                "linux-x86_64": [
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_x86_64.tar.zst"
                 ]
               }
             }
@@ -250,23 +260,26 @@
               "cxx_flags": {},
               "cxx_standard": {},
               "dbg_compile_flags": {},
-              "exec_arch": "amd64",
-              "exec_os": "linux",
+              "exec_arch": "",
+              "exec_os": "",
               "extra_exec_compatible_with": {},
               "extra_target_compatible_with": {},
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": ""
+                "": "18.1.8"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
-              "stdlib": {},
+              "stdlib": {
+                "linux-x86_64": "stdc++",
+                "linux-aarch64": "stdc++"
+              },
               "target_settings": {},
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
               "sysroot": {
-                "": "'@@toolchains_llvm++llvm+llvm_toolchain//:sysroot'"
+                "linux-x86_64": "'@@+_repo_rules+bazel_sysroot_library//:sysroot'"
               }
             }
           }
@@ -274,8 +287,8 @@
         "recordedRepoMappingEntries": [
           [
             "",
-            "llvm_toolchain",
-            "toolchains_llvm++llvm+llvm_toolchain"
+            "bazel_sysroot_library",
+            "+_repo_rules+bazel_sysroot_library"
           ],
           [
             "toolchains_llvm+",
