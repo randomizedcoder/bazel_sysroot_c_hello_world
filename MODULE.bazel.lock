@@ -206,7 +206,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
-        "usagesDigest": "nhQ0sphFTa9UGAYoUPXJl1fD7gy6ezHPaVXb1m1tRqg=",
+        "usagesDigest": "zUS8r9QuRASPjEsyL4mmpGffDsH7izARU2e2U3DUJKU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -221,28 +221,28 @@
               "exec_os": "",
               "libclang_rt": {},
               "llvm_mirror": "",
-              "llvm_version": "18.1.8",
+              "llvm_version": "20.1.1",
               "llvm_versions": {},
               "netrc": "",
               "sha256": {
-                "darwin-aarch64": "d28437d58615ccae434c289bcf5e0d10f031c732d7b60a5090541dbbbd381a01",
-                "darwin-x86_64": "f0c103bc2a19ffee7b55df2798188f085756e5668adc7c18d05c7f6705871828",
-                "linux-aarch64": "e9695cb9a8d068236b1c902af877be396eb0110d87525db49c68911b571f6976",
-                "linux-x86_64": "4d0bbec4acd23006d1353d0cd255144df8c910981f5474f3030bfde3dc75ccfa"
+                "darwin-aarch64": "a4e65db49d01e4b37abcbc36a03e4f1121fbea63a7c7b58f9d49e3848a4cbdfc",
+                "darwin-x86_64": "b681a621e6d456e20fdfc7626db23edad63f7dabb1442790db3397431688cb41",
+                "linux-aarch64": "a71d6686edfb32e455717a1befb013b580a52042915a49f21fc25f83fff59e20",
+                "linux-x86_64": "2096e63a41887a860199aec0f046f82e6469b2cd5ae4e4245a7a111bff4abe5b"
               },
               "strip_prefix": {},
               "urls": {
                 "darwin-aarch64": [
-                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_aarch64.tar.zst"
+                  "https://github.com/dzbarsky/static-clang/releases/download/v20.1.1-4/darwin_arm64.tar.zst"
                 ],
                 "darwin-x86_64": [
-                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_x86_64.tar.zst"
+                  "https://github.com/dzbarsky/static-clang/releases/download/v20.1.1-4/darwin_amd64.tar.zst"
                 ],
                 "linux-aarch64": [
-                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_aarch64.tar.zst"
+                  "https://github.com/dzbarsky/static-clang/releases/download/v20.1.1-4/linux_arm64.tar.zst"
                 ],
                 "linux-x86_64": [
-                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_x86_64.tar.zst"
+                  "https://github.com/dzbarsky/static-clang/releases/download/v20.1.1-4/linux_amd64.tar.zst"
                 ]
               }
             }
@@ -267,7 +267,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.8"
+                "": "20.1.1"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},

@@ -196,3 +196,37 @@ In this repo, we are trying to use Bazel modules, and the latest versions of the
 | gazelle | 0.43.0 | [bazel-contrib/bazel-gazelle](https://github.com/bazel-contrib/bazel-gazelle/tags) |
 | rules_go | 0.54.1 | [bazel-contrib/rules_go](https://github.com/bazel-contrib/rules_go/tags) |
 | toolchain_llvm | 1.4.0 | [bazel-contrib/toolchains_llvm](https://github.com/bazel-contrib/toolchains_llvm/tags) |
+
+## MaterializeInc toolchain
+
+There was a recommendation to use MaterializeInc's toolchain, however this uses shared libraries at runtime.
+
+https://github.com/MaterializeInc/toolchains
+```
+(exec env - \
+    LD_LIBRARY_PATH=/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib32/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib64/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/i386-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/x86_64-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/aarch64-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib32/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib64/: \
+    PATH=/home/das/.cache/bazelisk/downloads/sha256/7ff2b6a675b59a791d007c526977d5262ade8fa52efc8e0d1ff9e18859909fc0/bin:/run/wrappers/bin:/usr/bin:/usr/sbin:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/bin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/sbin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/games/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/bin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/sbin/:/nix/store/1q9lw4r2mbap8rsr8cja46nap6wvrw2p-bash-interactive-5.2p37/bin:/nix/store/v63bxfiacw082c7ijshf60alvvrpfxsq-binutils-2.44/bin:/nix/store/87fck6hm17chxjq7badb11mq036zbyv9-coreutils-9.7/bin:/nix/store/fcyn0dqszgfysiasdmkv1jh3syncajay-gawk-5.3.2/bin:/nix/store/a15rc9v3f5zb0wdxll7mxcidbvp78nny-libarchive-3.7.8/bin:/nix/store/95c0yh4a1jgw5sfg404sfd4v26h8vr1z-pv-1.9.31/bin:/nix/store/5liqs188bhx6cxfwd7rfhsgq7aj2v6ix-squashfs-4.6.1/bin:/run/wrappers/bin:/usr/bin:/usr/sbin:/run/wrappers/bin:/home/das/.nix-profile/bin:/nix/profile/bin:/home/das/.local/state/nix/profile/bin:/etc/profiles/per-user/das/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/nix/store/wqa75pw63x1ab9ci3x3shrc3ychc06ja-ghostty-1.1.3/bin \
+    PWD=/proc/self/cwd \
+    TMPDIR=/tmp \
+    ZERO_AR_DATE=1 \
+  /home/das/.cache/bazel/_bazel_das/install/772f324362dbeab9bc869b8fb3248094/linux-sandbox -t 15 -w /dev/shm -w /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/execroot/_main -w /tmp -M /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/_hermetic_tmp -m /tmp -S /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/stats.out -D /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/debug.out -- /bin/sh -i)
+ERROR: /home/das/Downloads/bazel_sysroot_c_hello_world/BUILD.bazel:5:10: Linking hello failed: (Exit 1): linux-sandbox failed: error executing CppLink command
+  (cd /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/execroot/_main && \
+  exec env - \
+    LD_LIBRARY_PATH=/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib32/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/lib64/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/i386-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/x86_64-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib/aarch64-linux-gnu/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib32/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/lib64/: \
+    PATH=/home/das/.cache/bazelisk/downloads/sha256/7ff2b6a675b59a791d007c526977d5262ade8fa52efc8e0d1ff9e18859909fc0/bin:/run/wrappers/bin:/usr/bin:/usr/sbin:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/bin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/sbin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/usr/games/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/bin/:/nix/store/rl94syzwgdwi54wp66gpx4hywcsxrkyb-cursor-0.50.5-extracted/sbin/:/nix/store/1q9lw4r2mbap8rsr8cja46nap6wvrw2p-bash-interactive-5.2p37/bin:/nix/store/v63bxfiacw082c7ijshf60alvvrpfxsq-binutils-2.44/bin:/nix/store/87fck6hm17chxjq7badb11mq036zbyv9-coreutils-9.7/bin:/nix/store/fcyn0dqszgfysiasdmkv1jh3syncajay-gawk-5.3.2/bin:/nix/store/a15rc9v3f5zb0wdxll7mxcidbvp78nny-libarchive-3.7.8/bin:/nix/store/95c0yh4a1jgw5sfg404sfd4v26h8vr1z-pv-1.9.31/bin:/nix/store/5liqs188bhx6cxfwd7rfhsgq7aj2v6ix-squashfs-4.6.1/bin:/run/wrappers/bin:/usr/bin:/usr/sbin:/run/wrappers/bin:/home/das/.nix-profile/bin:/nix/profile/bin:/home/das/.local/state/nix/profile/bin:/etc/profiles/per-user/das/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/nix/store/wqa75pw63x1ab9ci3x3shrc3ychc06ja-ghostty-1.1.3/bin \
+    PWD=/proc/self/cwd \
+    TMPDIR=/tmp \
+    ZERO_AR_DATE=1 \
+  /home/das/.cache/bazel/_bazel_das/install/772f324362dbeab9bc869b8fb3248094/linux-sandbox -t 15 -w /dev/shm -w /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/execroot/_main -w /tmp -M /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/_hermetic_tmp -m /tmp -S /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/stats.out -D /home/das/.cache/bazel/_bazel_das/a84d885b8a0d42e22ab01a9042c210c2/sandbox/linux-sandbox/2/debug.out -- external/toolchains_llvm++llvm+llvm_toolchain/bin/cc_wrapper.sh @bazel-out/k8-fastbuild/bin/hello-0.params)
+external/toolchains_llvm++llvm+llvm_toolchain_llvm/bin/ld.lld: error while loading shared libraries: libxml2.so.2: cannot open shared object file: No such file or directory
+clang: error: unable to execute command: No such file or directory
+clang: error: linker command failed due to signal (use -v to see invocation)
+Target //:hello failed to build
+INFO: Elapsed time: 12.355s, Critical Path: 0.77s
+INFO: 10 processes: 9 internal, 1 linux-sandbox.
+ERROR: Build did NOT complete successfully
+make: *** [Makefile:11: build] Error 1
+
+[das@l:~/Downloads/bazel_sysroot_c_hello_world]$
+```
