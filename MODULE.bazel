@@ -100,8 +100,9 @@ http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "ht
 http_archive(
     name = "bazel_sysroot_library",
     urls = ["https://github.com/randomizedcoder/bazel_sysroot_library/archive/refs/heads/main.tar.gz"],
-    sha256 = "e0a1d57e5d37a714ed3ac40fe02fb69d95266d4e37041e37901d8ea33302ad51",
+    sha256 = "4d3f134ac6c63615dad670b10e52997fc460cce4b4f6e2deef994b594b3d5771",
     strip_prefix = "bazel_sysroot_library-main/sysroot",
 )
+# curl -sSL https://github.com/randomizedcoder/bazel_sysroot_library/archive/refs/heads/main.tar.gz | sha256sum
 
 # end

@@ -5,4 +5,17 @@
 cc_binary(
     name = "hello",
     srcs = ["hello.cc"],
+    copts = [
+        "-nostdinc",
+        "-nostdinc++",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322/bits",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322/x86_64-unknown-linux-gnu",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/bits",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/lib/gcc/x86_64-unknown-linux-gnu/14.2.1/include",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/x86_64-unknown-linux-gnu",
+        "--sysroot=external/+_repo_rules+bazel_sysroot_library",
+        "-stdlib=libstdc++",
+    ],
 )

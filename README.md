@@ -230,3 +230,17 @@ make: *** [Makefile:11: build] Error 1
 
 [das@l:~/Downloads/bazel_sysroot_c_hello_world]$
 ```
+
+## Monogon Bazel hermetic LLVM toolchain
+
+https://review.monogon.dev/plugins/gitiles/toolchain_cc
+
+```
+[das@l:~/Downloads]$ git clone "https://review.monogon.dev/toolchain_cc"
+Cloning into 'toolchain_cc'...
+remote: Counting objects: 26, done
+remote: Finding sources: 100% (26/26)
+remote: Total 26 (delta 2), reused 26 (delta 2)
+Receiving objects: 100% (26/26), 23.57 KiB | 23.57 MiB/s, done.
+Resolving deltas: 100% (2/2), done.
+```
