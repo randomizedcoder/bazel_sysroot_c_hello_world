@@ -206,7 +206,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
-        "usagesDigest": "0R42oNOnxclpDNXVCbfUHHw6PdCvwBFnnVw/uWviAnU=",
+        "usagesDigest": "UlvDLsJKk2kQ6mkpOU246wIG4hb0J2Vk+0+PgppX4VI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -219,7 +219,9 @@
               "distribution": "auto",
               "exec_arch": "",
               "exec_os": "",
-              "libclang_rt": {},
+              "libclang_rt": {
+                "@@+_repo_rules+bazel_sysroot_library_and_libs_amd64//:lib/linux/libclang_rt.builtins-x86_64.a": "x86_64-unknown-linux-gnu/libclang_rt.builtins.a"
+              },
               "llvm_mirror": "",
               "llvm_version": "20.1.1",
               "llvm_versions": {},

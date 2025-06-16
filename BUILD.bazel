@@ -55,6 +55,7 @@ cc_binary(
     # LD_LIBRARY_PATH
     linkopts = [
         "-L", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
+        "-L", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux",
         "-Wl,-rpath,$ORIGIN",
         "-Wl,--no-undefined",  # Make linker fail if it can't find libraries
         "-Wl,--allow-multiple-definition",  # Allow multiple definitions to handle the problematic -l:c++.a flags

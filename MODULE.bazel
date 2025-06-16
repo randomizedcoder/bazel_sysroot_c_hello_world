@@ -18,6 +18,9 @@ llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 # Attempting to use: https://github.com/dzbarsky/static-clang
 llvm.toolchain(
     llvm_version = "20.1.1",
+    libclang_rt = {
+        "@bazel_sysroot_library_and_libs_amd64//:lib/linux/libclang_rt.builtins-x86_64.a": "x86_64-unknown-linux-gnu/libclang_rt.builtins.a",
+    },
     sha256 = {
         "darwin-aarch64": "a4e65db49d01e4b37abcbc36a03e4f1121fbea63a7c7b58f9d49e3848a4cbdfc",
         "darwin-x86_64": "b681a621e6d456e20fdfc7626db23edad63f7dabb1442790db3397431688cb41",
