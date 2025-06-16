@@ -244,3 +244,9 @@ remote: Total 26 (delta 2), reused 26 (delta 2)
 Receiving objects: 100% (26/26), 23.57 KiB | 23.57 MiB/s, done.
 Resolving deltas: 100% (2/2), done.
 ```
+
+
+## Other References:
+- https://bazel.build/reference/be/c-cpp#cc_binary
+- https://clang.llvm.org/docs/CommandGuide/clang.html
+- https://releases.llvm.org/2.9/docs/CommandGuide/html/llvm-ld.html

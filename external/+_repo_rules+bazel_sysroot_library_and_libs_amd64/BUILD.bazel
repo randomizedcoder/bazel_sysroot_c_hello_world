@@ -1,0 +1,49 @@
+# Expose startup files
+cc_library(
+    name = "crt1",
+    srcs = ["lib/Scrt1.o"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "crti",
+    srcs = ["lib/crti.o"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "crtbegin",
+    srcs = ["lib/gcc/x86_64-unknown-linux-gnu/14.2.1/crtbeginS.o"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "crtend",
+    srcs = ["lib/gcc/x86_64-unknown-linux-gnu/14.2.1/crtendS.o"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "crtn",
+    srcs = ["lib/crtn.o"],
+    visibility = ["//visibility:public"],
+)
+
+# Expose libraries
+cc_library(
+    name = "libstdc++",
+    srcs = ["lib/libstdc++.a"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "libgcc",
+    srcs = ["lib/gcc/x86_64-unknown-linux-gnu/14.2.1/libgcc.a"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "libgcc_s",
+    srcs = ["lib/libgcc_s.so"],
+    visibility = ["//visibility:public"],
+)

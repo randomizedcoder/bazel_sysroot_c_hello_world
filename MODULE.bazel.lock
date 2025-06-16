@@ -206,7 +206,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
-        "usagesDigest": "zUS8r9QuRASPjEsyL4mmpGffDsH7izARU2e2U3DUJKU=",
+        "usagesDigest": "0R42oNOnxclpDNXVCbfUHHw6PdCvwBFnnVw/uWviAnU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -271,15 +271,12 @@
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
-              "stdlib": {
-                "linux-x86_64": "stdc++",
-                "linux-aarch64": "stdc++"
-              },
+              "stdlib": {},
               "target_settings": {},
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
               "sysroot": {
-                "linux-x86_64": "'@@+_repo_rules+bazel_sysroot_library//:sysroot'"
+                "linux-x86_64": "'@@+_repo_rules+bazel_sysroot_library_and_libs_amd64//:sysroot'"
               }
             }
           }
@@ -287,8 +284,8 @@
         "recordedRepoMappingEntries": [
           [
             "",
-            "bazel_sysroot_library",
-            "+_repo_rules+bazel_sysroot_library"
+            "bazel_sysroot_library_and_libs_amd64",
+            "+_repo_rules+bazel_sysroot_library_and_libs_amd64"
           ],
           [
             "toolchains_llvm+",

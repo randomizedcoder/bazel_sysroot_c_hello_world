@@ -2,20 +2,83 @@
 # BUILD.bazel
 #
 
+# Please note that because we are trying to be completely "hermetic", we are only using libraries from the sysroot.
+# # Do not search the standard system directories or compiler builtin directories for include files.
+# "-nostdinc",
+# # Do not search clang's builtin directory for include files.
+# "-nobuiltininc",
+# # Do not search the system C++ standard library directory for include files.
+# "-nostdinc++",
+
+# https://bazel.build/reference/be/c-cpp#cc_binary
+# https://clang.llvm.org/docs/CommandGuide/clang.html
 cc_binary(
     name = "hello",
     srcs = ["hello.cc"],
-    copts = [
-        "-nostdinc",
-        "-nostdinc++",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322/bits",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/c++/14.2.1.20250322/x86_64-unknown-linux-gnu",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/bits",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/lib/gcc/x86_64-unknown-linux-gnu/14.2.1/include",
-        "-isystem", "external/+_repo_rules+bazel_sysroot_library/include/x86_64-unknown-linux-gnu",
-        "--sysroot=external/+_repo_rules+bazel_sysroot_library",
-        "-stdlib=libstdc++",
+    deps = [
+        "@bazel_sysroot_library_and_libs_amd64//:crt1",
+        "@bazel_sysroot_library_and_libs_amd64//:crti",
+        "@bazel_sysroot_library_and_libs_amd64//:crtn",
+        # "@bazel_sysroot_library_and_libs_amd64//:libc++",    # clang
+        # "@bazel_sysroot_library_and_libs_amd64//:libc++abi", # clang
+        "@bazel_sysroot_library_and_libs_amd64//:libstdc++", # gcc
+        "@bazel_sysroot_library_and_libs_amd64//:libsupc++", # gcc
+        "@bazel_sysroot_library_and_libs_amd64//:libgcc_s",
     ],
+    copts = [
+        # Do not search the standard system directories or compiler builtin directories for include files.
+        "-nostdinc",
+        # Do not search clang's builtin directory for include files.
+        #"-nobuiltininc",
+        # Do not search the system C++ standard library directory for include files.
+        "-nostdinc++",
+        # # libc++ headers clang
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1",
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1/__memory",
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1/__support",
+        # GCC headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/gcc/x86_64-unknown-linux-gnu/14.2.1/include",
+        # C++ standard library headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/14.2.1.20250322",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/14.2.1.20250322/x86_64-unknown-linux-gnu",
+        # C standard library headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include",
+        # Architecture-specific headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/x86_64-unknown-linux-gnu",
+        # Linux headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/linux",
+        "-v",
+    ],
+    #nocopts = [],
+    # https://releases.llvm.org/2.9/docs/CommandGuide/html/llvm-ld.html
+    # LLVM_LIB_SEARCH_PATH
+    # LD_LIBRARY_PATH
+    linkopts = [
+        "-L", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
+        "-Wl,-rpath,$ORIGIN",
+        "-Wl,--no-undefined",  # Make linker fail if it can't find libraries
+        "-Wl,--allow-multiple-definition",  # Allow multiple definitions to handle the problematic -l:c++.a flags
+        "-Wl,--start-group", # Ensure this group is properly started for libc++/libunwind
+        # clang
+        # "-Wl,--whole-archive",
+        # "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/libc++.a",
+        # "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/libc++abi.a",
+        # "-Wl,--no-whole-archive",
+        #"-lunwind",
+        "-Wl,--end-group",
+        "-Wl,--start-group",
+        "-lc",
+        "-lm",
+        "-Wl,--end-group",
+        "-Wl,--start-group",
+        "-lgcc",
+        "-lgcc_s",
+        "-Wl,--end-group",
+        # Add the correct path to libclang_rt.builtins.a
+        "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux/libclang_rt.builtins-x86_64.a",
+        "-v",
+    ],
+    # env = {
+    #     "LD_LIBRARY_PATH": "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
+    # },
 )

@@ -71,3 +71,6 @@ for pkg in ${pkgs.zlib} ${pkgs.zlib.dev} ${pkgs.zlib.static} \
     done
   fi
 done
+
+# Generate and copy BUILD.bazel
+cp ${buildBazel} $out/sysroot/BUILD.bazel
