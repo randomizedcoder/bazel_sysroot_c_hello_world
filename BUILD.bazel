@@ -13,17 +13,12 @@
 # https://bazel.build/reference/be/c-cpp#cc_binary
 # https://clang.llvm.org/docs/CommandGuide/clang.html
 cc_binary(
-    name = "hello",
+    name = "hello_cc",
     srcs = ["hello.cc"],
     deps = [
-        "@bazel_sysroot_library_and_libs_amd64//:crt1",
-        "@bazel_sysroot_library_and_libs_amd64//:crti",
-        "@bazel_sysroot_library_and_libs_amd64//:crtn",
-        # "@bazel_sysroot_library_and_libs_amd64//:libc++",    # clang
-        # "@bazel_sysroot_library_and_libs_amd64//:libc++abi", # clang
-        "@bazel_sysroot_library_and_libs_amd64//:libstdc++", # gcc
-        "@bazel_sysroot_library_and_libs_amd64//:libsupc++", # gcc
-        "@bazel_sysroot_library_and_libs_amd64//:libgcc_s",
+        "@bazel_sysroot_library_and_libs_amd64//:libc",
+        "@bazel_sysroot_library_and_libs_amd64//:libgcc",
+        "@bazel_sysroot_library_and_libs_amd64//:libstdc++",
     ],
     copts = [
         # Do not search the standard system directories or compiler builtin directories for include files.
@@ -47,26 +42,33 @@ cc_binary(
         "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/x86_64-unknown-linux-gnu",
         # Linux headers
         "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/linux",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/asm",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/asm-generic",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/drm",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/asm-generic",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/linux",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/x86_64-linux-gnu",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/x86_64-linux-gnu",
+        # verbose
         "-v",
     ],
-    #nocopts = [],
-    # https://releases.llvm.org/2.9/docs/CommandGuide/html/llvm-ld.html
-    # LLVM_LIB_SEARCH_PATH
-    # LD_LIBRARY_PATH
     linkopts = [
-        "-L", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
-        "-L", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux",
-        "-Wl,-rpath,$ORIGIN",
-        "-Wl,--no-undefined",  # Make linker fail if it can't find libraries
-        "-Wl,--allow-multiple-definition",  # Allow multiple definitions to handle the problematic -l:c++.a flags
-        "-Wl,--start-group", # Ensure this group is properly started for libc++/libunwind
-        # clang
-        # "-Wl,--whole-archive",
-        # "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/libc++.a",
-        # "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/libc++abi.a",
-        # "-Wl,--no-whole-archive",
-        #"-lunwind",
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/gcc/x86_64-unknown-linux-gnu/14.2.1",
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux",
+        "-Wl,--start-group",
+        "-l:libc.so.6",
+        "-l:libgcc_s.so.1",
+        "-l:libstdc++.so.6",
+        "-l:libsupc++.a",
         "-Wl,--end-group",
+        "-Wl,--start-group",
+        "-l:libgcc.a",
+        "-Wl,--end-group",
+        "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux/libclang_rt.builtins-x86_64.a",
+        "-Wl,--allow-multiple-definition",
+        "-Wl,--no-undefined",
         "-Wl,--start-group",
         "-lc",
         "-lm",
@@ -75,11 +77,77 @@ cc_binary(
         "-lgcc",
         "-lgcc_s",
         "-Wl,--end-group",
-        # Add the correct path to libclang_rt.builtins.a
-        "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux/libclang_rt.builtins-x86_64.a",
+        # verbose
         "-v",
     ],
-    # env = {
-    #     "LD_LIBRARY_PATH": "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
-    # },
+)
+
+cc_binary(
+    name = "hello_c",
+    srcs = ["hello.c"],
+    deps = [
+        "@bazel_sysroot_library_and_libs_amd64//:libc",
+        "@bazel_sysroot_library_and_libs_amd64//:libgcc",
+        "@bazel_sysroot_library_and_libs_amd64//:libstdc++",
+    ],
+    copts = [
+        # Do not search the standard system directories or compiler builtin directories for include files.
+        "-nostdinc",
+        # Do not search clang's builtin directory for include files.
+        #"-nobuiltininc",
+        # Do not search the system C++ standard library directory for include files.
+        "-nostdinc++",
+        # # libc++ headers clang
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1",
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1/__memory",
+        # "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/v1/__support",
+        # GCC headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/gcc/x86_64-unknown-linux-gnu/14.2.1/include",
+        # C++ standard library headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/14.2.1.20250322",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/c++/14.2.1.20250322/x86_64-unknown-linux-gnu",
+        # C standard library headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include",
+        # Architecture-specific headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/x86_64-unknown-linux-gnu",
+        # Linux headers
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/linux",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/asm",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/asm-generic",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/drm",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/asm-generic",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/linux",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/uapi/x86_64-linux-gnu",
+        "-isystem", "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/include/x86_64-linux-gnu",
+        # verbose
+        "-v",
+    ],
+    linkopts = [
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib",
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/gcc/x86_64-unknown-linux-gnu/14.2.1",
+        "-Lexternal/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux",
+        "-Wl,--start-group",
+        "-l:libc.so.6",
+        "-l:libgcc_s.so.1",
+        "-l:libstdc++.so.6",
+        "-l:libsupc++.a",
+        "-Wl,--end-group",
+        "-Wl,--start-group",
+        "-l:libgcc.a",
+        "-Wl,--end-group",
+        "external/+_repo_rules+bazel_sysroot_library_and_libs_amd64/lib/linux/libclang_rt.builtins-x86_64.a",
+        "-Wl,--allow-multiple-definition",
+        "-Wl,--no-undefined",
+        "-Wl,--start-group",
+        "-lc",
+        "-lm",
+        "-Wl,--end-group",
+        "-Wl,--start-group",
+        "-lgcc",
+        "-lgcc_s",
+        "-Wl,--end-group",
+        # verbose
+        "-v",
+    ],
 )

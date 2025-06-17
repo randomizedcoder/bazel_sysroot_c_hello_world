@@ -2,16 +2,19 @@
 # Makefile
 #
 
-all: clean build
+all: clean buildc buildcc
 
 clean:
 	bazelisk clean --expunge
 
-build:
-	bazelisk build //:hello --verbose_failures --sandbox_debug
+buildc:
+	bazelisk build //:hello_c --verbose_failures --sandbox_debug
 
-build-debug:
-	bazelisk build //:hello --verbose_failures --sandbox_debug --experimental_skylark_debug --keep_state_after_build
+buildcc:
+	bazelisk build //:hello_cc --verbose_failures --sandbox_debug
+
+buildcc-debug:
+	bazelisk build //:hello_cc --verbose_failures --sandbox_debug --experimental_skylark_debug --keep_state_after_build
 
 # https://docs.stack.build/docs/cli/installation
 install-bzl:
