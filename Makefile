@@ -7,6 +7,34 @@ all: clean buildc buildcc
 clean:
 	bazelisk clean --expunge
 
+# Build
+
+build: build_hello build_sysroot_library_test_cc
+
+build_hello: build_hello_c_shared build_hello_c_static build_hello_cc_shared build_hello_cc_static
+
+build_hello_static: build_hello_c_static build_hello_cc_static
+build_hello_shared: build_hello_c_shared build_hello_cc_shared
+
+build_hello_c_shared:
+	bazelisk build //:hello_c_shared --verbose_failures
+build_hello_c_static:
+	bazelisk build //:hello_c_static --verbose_failures
+
+build_hello_cc_shared:
+	bazelisk build //:hello_cc_shared --verbose_failures
+build_hello_cc_static:
+	bazelisk build //:hello_cc_static --verbose_failures
+
+build_sysroot_library_test_cc: build_sysroot_library_test_cc_shared build_sysroot_library_test_cc_static
+
+build_sysroot_library_test_cc_shared:
+	bazelisk build //:sysroot_library_test_cc_shared --verbose_failures
+build_sysroot_library_test_cc_static:
+	bazelisk build //:sysroot_library_test_cc_static --verbose_failures
+
+# Debugging builds
+
 buildc:
 	bazelisk build //:hello_c --verbose_failures --sandbox_debug
 
@@ -15,6 +43,32 @@ buildcc:
 
 buildcc-debug:
 	bazelisk build //:hello_cc --verbose_failures --sandbox_debug --experimental_skylark_debug --keep_state_after_build
+
+# Run
+
+run: run_hello run_sysroot_library_test_cc
+
+run_hello: run_hello_c_shared run_hello_c_static run_hello_cc_shared run_hello_cc_static
+
+run_hello_c_shared:
+	bazelisk run //:hello_c_shared
+
+run_hello_c_static:
+	bazelisk run //:hello_c_static
+
+run_hello_cc_shared:
+	bazelisk run //:hello_cc_shared
+
+run_hello_cc_static:
+	bazelisk run //:hello_cc_static
+
+run_sysroot_library_test_cc: run_sysroot_library_test_cc_shared run_sysroot_library_test_cc_static
+
+run_sysroot_library_test_cc_shared:
+	bazelisk run //:sysroot_library_test_cc_shared
+
+run_sysroot_library_test_cc_static:
+	bazelisk run //:sysroot_library_test_cc_static
 
 # https://docs.stack.build/docs/cli/installation
 install-bzl:
@@ -37,6 +91,10 @@ query_rules_cc:
 
 output_base:
 	bazelisk info output_base
+
+
+calculate_checksum:
+	curl -sSL https://github.com/randomizedcoder/bazel_sysroot_library_and_libs_amd64/archive/refs/heads/main.tar.gz | sha256sum
 
 # [das@l:~/Downloads/c_hello_world]$ bazelisk query '@toolchains_llvm//...' --output=label_kind
 # platform rule @toolchains_llvm//platforms:darwin-aarch64

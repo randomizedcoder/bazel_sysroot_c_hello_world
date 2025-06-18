@@ -1,5 +1,14 @@
 {
   "files.associations": {
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "cmath": "cpp",
+    "cstdarg": "cpp",
+    "cstdio": "cpp",
+    "cstdlib": "cpp",
+    "ctime": "cpp",
+    "string": "cpp",
+    "ratio": "cpp",
+    "limits": "cpp",
+    "vector": "cpp"
   }
 }
